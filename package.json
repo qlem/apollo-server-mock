@@ -1,0 +1,21 @@
+{
+  "name": "apollo-server-mock",
+  "version": "1.0.0",
+  "description": "An apollo server mock",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/app.js"
+  },
+  "author": "qlem",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server-koa": "^2.18.0",
+    "graphql": "^15.3.0",
+    "koa": "^2.13.0",
+    "mongodb": "^3.6.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
