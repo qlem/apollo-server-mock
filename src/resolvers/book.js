@@ -2,7 +2,7 @@
 
 const { ObjectID } = require('mongodb')
 
-exports.Query = {
+exports.queryBook = {
     book: async (_, args, context) => {
         try {
             const collection = context.db.collection('book')
@@ -72,31 +72,49 @@ exports.Query = {
         } catch (err) {
             console.error(err)
         }
-    },
-    author: async (_, args, context) => {
+    }
+}
+
+exports.mutationBook = {
+    addBook: async (_, args, context) => {
         try {
-            const collection = context.db.collection('author')
-            const res = await collection.findOne({_id: ObjectID(args.id)})
-            return {
+            let collection = context.db.collection('author')
+            let res = await collection.findOne({_id: ObjectID(args.book.authorID)})
+            if (!res) {
+                return {
+                    success: false,
+                    insertedCount: 0,
+                    book: null
+                }
+            }
+            const author = {
                 id: res._id,
                 name: res.name
+            }
+            collection = context.db.collection('book')
+            res = await collection.insertOne({
+                title: args.book.title,
+                author: ObjectID(author.id)
+            })
+            if (res.result.ok === 1) {
+                const book = {
+                    id: res.insertedId,
+                    title: args.book.title,
+                    author: author 
+                }
+                return {
+                    success: true,
+                    insertedCount: res.insertedCount,
+                    book: book
+                }
+            }
+            return {
+                success: false,
+                insertedCount: res.insertedCount,
+                book: null
             }
         } catch (err) {
             console.error(err)
         }
-    },
-    authors: async (_, __, context) => {
-        try {
-            const collection = context.db.collection('author')
-            const res = await collection.find({}, {
-                sort: {name: 1}
-            }).toArray()
-            return res.map(author => ({
-                id: author._id,
-                name: author.name
-            }))
-        } catch (err) {
-            console.error(err)
-        }
-    }
-}
+    }  
+} 

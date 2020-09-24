@@ -1,10 +1,10 @@
 'use strict'
 
 const Koa = require('koa')
+const { MongoClient } = require('mongodb')
 const { ApolloServer } = require('apollo-server-koa')
 const { typeDefs } = require('./schema')
 const { resolvers } = require('./resolvers/index')
-const { MongoClient } = require('mongodb')
 const { logger } = require('./middleware/logger')
 
 // mongodb stuff

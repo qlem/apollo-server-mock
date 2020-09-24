@@ -1,10 +1,17 @@
 'use strict'
 
-const { Query } = require('./query')
-const { Mutation, InsertMutationResponse } = require('./mutation')
+const { queryBook, mutationBook } = require('./book')
+const { queryAuthor, mutationAuthor } = require('./author')
+const { InsertMutationResponse } = require('./mutationResponse')
 
 exports.resolvers = {
-    Query,
-    Mutation,
+    Query: {
+        ...queryBook,
+        ...queryAuthor
+    },
+    Mutation: {
+        ...mutationBook,
+        ...mutationAuthor
+    },
     InsertMutationResponse
 }
