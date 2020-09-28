@@ -1,3 +1,3 @@
 # Apollo Server mock
 
-To do..
+A GraphQL API. Uses Apollo Server with Koa JS as middleware.
